@@ -1,0 +1,148 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.company</groupId>
+	<artifactId>jboss-task-scheduler</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<name>Spring and JBOSS Task Schedule Example</name>
+
+	<organization>
+		<name>Company</name>
+		<url>http://www.company.com</url>
+	</organization>
+
+
+	<properties>
+		<urlpath>jboss-task-scheduler</urlpath>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMdd_hhmm</maven.build.timestamp.format>
+		<version.jboss-javaee-6.0>1.0.0.Final</version.jboss-javaee-6.0>
+		<version.jboss-javaee-web-6.0>2.0.0.Final</version.jboss-javaee-web-6.0>
+		<version.commons-lang>3.6</version.commons-lang>
+		<version.spring>4.3.9.RELEASE</version.spring>
+		<version.jboss-msc>1.1.5.Final-redhat-1</version.jboss-msc>
+		<version.jboss-as-clustering-singleton>7.5.0.Final-redhat-21</version.jboss-as-clustering-singleton>
+		<version.maven-war-plugin>2.6</version.maven-war-plugin>
+		<version.maven-assembly-plugin>2.6</version.maven-assembly-plugin>
+		<version.maven-compiler-plugin>3.5.1</version.maven-compiler-plugin>
+	</properties>
+	<dependencies>
+
+
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-web-6.0</artifactId>
+			<version>${version.jboss-javaee-web-6.0}</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.msc</groupId>
+			<artifactId>jboss-msc</artifactId>
+			<version>${version.jboss-msc}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.as</groupId>
+			<artifactId>jboss-as-clustering-singleton</artifactId>
+			<version>${version.jboss-as-clustering-singleton}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>tools</artifactId>
+					<groupId>com.sun</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${version.spring}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${version.commons-lang}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.8.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.11</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.maven-compiler-plugin}</version>
+
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.maven-war-plugin}</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>${basedir}/src/main/webapp/</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>**/*.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+					<archive>
+						<manifestEntries>
+							<Dependencies>org.jboss.msc, org.jboss.as.clustering.singleton
+							</Dependencies>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+
+</project>
